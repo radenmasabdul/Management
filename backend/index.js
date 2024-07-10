@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 
 //init app
 const app = express();
+const router = require('./routes');
 
 //use dependencies
 app.use(cors());
@@ -18,6 +19,8 @@ const port = 3000;
 app.get('/', (req, res) => {
     res.send('Hello World!')
 });
+
+app.use('/api', router);
 
 //start server
 app.listen(port, () => {
