@@ -5,6 +5,9 @@ export default {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
+    fontFamily: {
+      JakartaSans: ["'Plus Jakarta Sans', sans-serif;"],
+    },
     extend: {},
   },
   plugins: [
