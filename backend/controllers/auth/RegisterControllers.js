@@ -3,7 +3,7 @@ const express = require('express');
 const { validationResult } = require('express-validator');
 
 const bcrypt = require("bcryptjs");
-const prisma = require('../prisma/client');
+const prisma = require('../../prisma/client');
 
 const register = async (req, res) => {
     const errors = validationResult(req);

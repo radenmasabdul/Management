@@ -4,7 +4,7 @@ const { validationResult } = require('express-validator');
 
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
-const prisma = require('../prisma/client');
+const prisma = require('../../prisma/client');
 
 const login = async (req, res) => {
     const errors = validationResult(req);
