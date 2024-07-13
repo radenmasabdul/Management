@@ -23,5 +23,6 @@ router.post('/login', validateLogin, LoginControllers.login);
 router.get('/admin/users', verifyToken, userControllers.getAllUsers);
 router.post('/admin/users', verifyToken, validateUser, userControllers.createUser);
 router.get('/admin/users/:id', verifyToken, userControllers.getUsersById);
+router.post('/admin/users/:id', verifyToken, userControllers.updateUsers);
 
 module.exports = router
