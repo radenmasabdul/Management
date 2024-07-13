@@ -69,4 +69,33 @@ const createUser = async (req, res) => {
     }
 };
 
-module.exports = { getAllUsers, createUser }
+//get users by id
+const getUsersById = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const users = await prisma.user.findUnique({
+            where: {
+                id: Number(id),
+            },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+            }
+        });
+
+        res.status(200).send({
+            success: true,
+            messages: `Get User By Id : ${id}`,
+            data: users,
+        });
+    } catch (error) {
+        res.status(500).send({
+            success: false,
+            messages: "Internal Server Error",
+        });
+    }
+};
+
+module.exports = { getAllUsers, createUser, getUsersById }
