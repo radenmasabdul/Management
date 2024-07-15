@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 
+let email = ref("");
 let password = ref("");
 
 let isHidePassword = ref(true);
@@ -8,11 +9,14 @@ let isHidePassword = ref(true);
 const togglePasswordVisibility = () => {
   isHidePassword.value = !isHidePassword.value;
 };
+
+const inputClass =
+  "w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-blue-600 font-JakartaSans";
 </script>
 
 <template>
   <div>
-    <div class="min-h-screen flex fle-col items-center justify-center py-6 px-4">
+    <div class="min-h-screen flex flex-col items-center justify-center py-6 px-4">
       <div class="grid md:grid-cols-2 items-center gap-4 max-w-6xl w-full">
         <div
           class="border border-gray-300 rounded-lg p-6 max-w-md shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] max-md:mx-auto"
@@ -34,12 +38,14 @@ const togglePasswordVisibility = () => {
                   type="email"
                   autocomplete="off"
                   required
-                  class="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-blue-600"
                   placeholder="Enter Your Email"
+                  v-model="email"
+                  :class="inputClass"
                 />
                 <font-awesome-icon :icon="['fas', 'envelope']" class="w-[18px] h-[18px] absolute right-4" />
               </div>
             </div>
+
             <div>
               <label for="password" class="text-gray-800 text-sm mb-2 block font-JakartaSans">Password</label>
               <div class="relative flex items-center">
@@ -49,10 +55,11 @@ const togglePasswordVisibility = () => {
                   :type="isHidePassword ? 'password' : 'text'"
                   autocomplete="off"
                   required
-                  class="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-blue-600"
                   placeholder="Enter password"
                   v-model="password"
+                  :class="inputClass"
                 />
+
                 <div @click="togglePasswordVisibility" class="w-[18px] h-[18px] absolute right-1">
                   <span>
                     <font-awesome-icon
@@ -82,22 +89,23 @@ const togglePasswordVisibility = () => {
               </div>
 
               <div class="text-sm">
-                <a href="#" class="text-blue-600 hover:underline font-semibold font-JakartaSans">
+                <RouterLink to="/forgot" class="text-blue-600 hover:underline font-semibold font-JakartaSans">
                   Forgot your password?
-                </a>
+                </RouterLink>
               </div>
             </div>
 
             <div class="!mt-8">
               <button
                 type="button"
-                class="w-full shadow-xl py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+                class="w-full shadow-xl py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none font-JakartaSans"
               >
                 Log in
               </button>
             </div>
           </form>
         </div>
+
         <div class="lg:h-[400px] md:h-[300px] max-md:mt-8">
           <img
             src="https://readymadeui.com/login-image.webp"
