@@ -1,4 +1,16 @@
-<script setup></script>
+<script setup>
+import { useRouter } from "vue-router";
+import Cookies from "js-cookie";
+
+const router = useRouter();
+
+const logout = () => {
+  Cookies.remove("token");
+  Cookies.remove("user");
+
+  router.push({ name: "login" });
+};
+</script>
 
 <template>
   <div class="navbar bg-base-100">
@@ -7,7 +19,7 @@
     </div>
     <div class="flex-none gap-2">
       <div class="form-control">
-        <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
+        <input id="search" name="search" type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
       </div>
       <div class="dropdown dropdown-end">
         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
@@ -26,7 +38,7 @@
             </a>
           </li>
           <li><a>Settings</a></li>
-          <li><a>Logout</a></li>
+          <li><a @click="logout">Logout</a></li>
         </ul>
       </div>
     </div>
