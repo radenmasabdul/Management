@@ -20,10 +20,10 @@ router.post('/register', validateRegister, RegisterControllers.register);
 router.post('/login', validateLogin, LoginControllers.login);
 
 //users
-router.get('/admin/users', verifyToken, userControllers.getAllUsers);
-router.post('/admin/users', verifyToken, validateUser, userControllers.createUser);
-router.get('/admin/users/:id', verifyToken, userControllers.getUsersById);
-router.post('/admin/users/:id', verifyToken, userControllers.updateUsers);
-router.delete('/admin/users/:id', verifyToken, userControllers.deleteUsers);
+router.get('/admin/users/getallusers', verifyToken, userControllers.getAllUsers);
+router.post('/admin/users/createusers', verifyToken, validateUser, userControllers.createUser);
+router.get('/admin/users/getusers/:id', verifyToken, userControllers.getUsersById);
+router.post('/admin/users/updateusers/:id', verifyToken, userControllers.updateUsers);
+router.delete('/admin/users/deleteusers/:id', verifyToken, userControllers.deleteUsers);
 
 module.exports = router
