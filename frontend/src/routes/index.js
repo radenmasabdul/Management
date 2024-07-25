@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Login from "../views/auth/Login.vue";
 import ForgotPassword from '../views/auth/ForgotPassword.vue';
 import Home from '../views/Home.vue';
+import Users from '../views/users/Users.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,13 +25,21 @@ const router = createRouter({
                 title: "Forgot Password",
             },
         },
-        //home
+        //menu
         {
             path: "/home",
             name: "home",
             component: Home,
             meta: {
                 title: "Home",
+            },
+        },
+        {
+            path: "/users",
+            name: "users",
+            component: Users,
+            meta: {
+                title: "Users",
             },
         },
     ]
