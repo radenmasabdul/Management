@@ -1,6 +1,7 @@
 <script setup>
 import Navbar from "../components/layout/Navbar.vue";
 import Sidebar from "../components/layout/Sidebar.vue";
+import Content from "../components/layout/Content.vue";
 </script>
 
 <template>
@@ -10,7 +11,9 @@ import Sidebar from "../components/layout/Sidebar.vue";
       <Navbar />
 
       <div class="h-full">
-        <slot></slot>
+        <Content>
+          <slot></slot>
+        </Content>
       </div>
     </div>
   </main>
