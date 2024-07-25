@@ -8,10 +8,17 @@ export default {
     fontFamily: {
       JakartaSans: ["'Plus Jakarta Sans', sans-serif;"],
     },
-    extend: {},
+    extend: {
+      colors: {
+        green: "#26A65B",
+      },
+    },
   },
   plugins: [
     require('daisyui'),
   ],
+  daisyui: {
+    themes: ["light"],
+  },
 }
 

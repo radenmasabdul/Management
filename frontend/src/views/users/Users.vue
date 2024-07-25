@@ -1,8 +1,9 @@
 <script setup>
 import Layout from "../../layouts/Layout.vue";
+import AddNewusers from "../../components/users/AddNewusers.vue";
 
 const inputClass =
-  "w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-blue-600 font-JakartaSans";
+  "w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-blue-600 font-JakartaSans focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1";
 </script>
 
 <template>
@@ -10,7 +11,7 @@ const inputClass =
     <div class="flex flex-wrap justify-between mx-5 my-2">
       <h1 class="font-JakartaSans text-2xl font-bold text-black my-2">Users</h1>
 
-      <button class="btn btn-success">Add New</button>
+      <AddNewusers />
     </div>
 
     <div class="flex flex-wrap mx-5 my-2">
