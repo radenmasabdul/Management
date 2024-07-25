@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <div class="lg:drawer-open bg-base-200">
+  <div class="lg:drawer-open bg-base-200 z-50">
     <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex flex-col items-center justify-center">
       <label for="my-drawer-2" class="lg:hidden">
