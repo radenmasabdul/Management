@@ -2,6 +2,35 @@
 import Layout from "../../layouts/Layout.vue";
 import AddNewUsers from "../../components/users/AddNewUsers.vue";
 
+import { ref, onBeforeMount, computed } from "vue";
+import { useUsersStore } from "../../utils/stores/users/users";
+
+const store = useUsersStore();
+const dataListUsers = computed(() => store.filtersDataUsers);
+const searchKeyword = ref(store.getSearchData);
+
+onBeforeMount(() => {
+  store.dataListUsers();
+});
+
+const tableHead = [
+  { id: 1, title: "No" },
+  { id: 2, title: "Name" },
+  { id: 3, title: "Email" },
+  { id: 4, title: "Actions" },
+];
+
+const handleKeyPress = (event) => {
+  if (event.key === "Enter") {
+    store.setSearchKeyword(searchKeyword.value);
+  }
+};
+
+const clearSearch = () => {
+  searchKeyword.value = "";
+  store.setSearchKeyword("");
+};
+
 const inputClass =
   "w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-blue-600 font-JakartaSans focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1";
 </script>
@@ -15,25 +44,34 @@ const inputClass =
     </div>
 
     <div class="flex flex-wrap mx-5 my-2">
-      <input type="search" id="search" name="search" placeholder="Search..." :class="inputClass" />
+      <input
+        type="search"
+        id="search"
+        name="search"
+        placeholder="Search..."
+        :class="inputClass"
+        v-model="searchKeyword"
+        @keypress="handleKeyPress"
+        @click="clearSearch"
+      />
     </div>
 
-    <div class="mx-5 my-2">
+    <div class="mx-5 my-2" v-if="dataListUsers.length > 0">
       <div class="overflow-x-auto">
         <table class="table table-zebra">
-          <thead>
+          <thead class="text-center">
             <tr>
-              <th>No</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Actions</th>
+              <th v-for="data in tableHead" :key="data.id" class="font-JakartaSans font-bold text-sm text-black">
+                {{ data.title }}
+              </th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <th>1</th>
-              <td>Cy Ganderton</td>
-              <td>Quality Control Specialist</td>
+
+          <tbody class="text-center">
+            <tr v-for="(data, index) in dataListUsers" :key="data.id">
+              <th>{{ index + 1 }}</th>
+              <td>{{ data.name }}</td>
+              <td>{{ data.email }}</td>
               <td class="flex flex-wrap justify-center items-center gap-4">
                 <button class="btn btn-info">Edit</button>
                 <button class="btn btn-error">Delete</button>
@@ -42,6 +80,10 @@ const inputClass =
           </tbody>
         </table>
       </div>
+    </div>
+
+    <div v-else>
+      <p>No data</p>
     </div>
 
     <div class="mx-5 my-2">
