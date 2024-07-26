@@ -48,6 +48,9 @@ export const useUsersStore = defineStore('users', {
                 console.error('Error deleting user:', error);
             }
         },
+        addUser(user) {
+            this.dataUsers.push(user);
+        },
         setSearchKeyword(keyword) {
             this.search = keyword;
         },
