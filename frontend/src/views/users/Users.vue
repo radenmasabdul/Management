@@ -1,6 +1,9 @@
 <script setup>
 import Layout from "../../layouts/Layout.vue";
 import AddNewUsers from "../../components/users/AddNewUsers.vue";
+import Table from "../../components/Table.vue";
+
+import Swal from "sweetalert2";
 
 import { ref, onBeforeMount, computed } from "vue";
 import { useUsersStore } from "../../utils/stores/users/users";
@@ -31,6 +34,36 @@ const clearSearch = () => {
   store.setSearchKeyword("");
 };
 
+const deleteUsers = async (id) => {
+  const result = await Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  });
+
+  if (result.isConfirmed) {
+    try {
+      await store.deleteUser(id);
+      Swal.fire({
+        title: "Deleted!",
+        text: "User has been deleted.",
+        icon: "success",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "An error occurred while deleting the user.",
+        icon: "error",
+      });
+      console.error(error);
+    }
+  }
+};
+
 const inputClass =
   "w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-blue-600 font-JakartaSans focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1";
 </script>
@@ -57,33 +90,49 @@ const inputClass =
     </div>
 
     <div class="mx-5 my-2" v-if="dataListUsers.length > 0">
-      <div class="overflow-x-auto">
-        <table class="table table-zebra">
-          <thead class="text-center">
-            <tr>
-              <th v-for="data in tableHead" :key="data.id" class="font-JakartaSans font-bold text-sm text-black">
-                {{ data.title }}
-              </th>
-            </tr>
-          </thead>
+      <Table>
+        <thead class="text-center">
+          <tr>
+            <th v-for="data in tableHead" :key="data.id" class="font-JakartaSans font-bold text-sm text-black">
+              {{ data.title }}
+            </th>
+          </tr>
+        </thead>
 
-          <tbody class="text-center">
-            <tr v-for="(data, index) in dataListUsers" :key="data.id">
-              <th>{{ index + 1 }}</th>
-              <td>{{ data.name }}</td>
-              <td>{{ data.email }}</td>
-              <td class="flex flex-wrap justify-center items-center gap-4">
-                <button class="btn btn-info">Edit</button>
-                <button class="btn btn-error">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <tbody class="text-center">
+          <tr v-for="(data, index) in dataListUsers" :key="data.id">
+            <th>{{ index + 1 }}</th>
+            <td>{{ data.name }}</td>
+            <td>{{ data.email }}</td>
+            <td class="flex flex-wrap justify-center items-center gap-4">
+              <button class="btn btn-info btn-sm">
+                <span><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff" /></span>
+              </button>
+              <button class="btn btn-error btn-sm" @click="deleteUsers(data.id)">
+                <span><font-awesome-icon :icon="['fas', 'trash']" style="color: #ffffff" /></span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </Table>
     </div>
 
     <div v-else>
-      <p>No data</p>
+      <Table>
+        <thead class="text-center">
+          <tr>
+            <th v-for="data in tableHead" :key="data.id" class="font-JakartaSans font-bold text-sm text-black">
+              {{ data.title }}
+            </th>
+          </tr>
+        </thead>
+
+        <tbody class="text-center">
+          <tr>
+            <td colspan="4" class="text-center font-JakartaSans text-sm text-black">Data not Found</td>
+          </tr>
+        </tbody>
+      </Table>
     </div>
 
     <div class="mx-5 my-2">
