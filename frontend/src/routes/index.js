@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import Cookies from 'js-cookie';
+import Swal from 'sweetalert2';
 
 import Login from "../views/auth/Login.vue";
 import ForgotPassword from '../views/auth/ForgotPassword.vue';
@@ -47,7 +49,24 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     document.title = `AL Company || ${to.meta.title}`;
-    next();
+
+    const token = Cookies.get('token');
+
+    // Skip token check if navigating to login or forgot password
+    if (to.name === 'login' || to.name === 'forgot') {
+        next();
+    } else if (!token) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Session Expired',
+            text: 'Your session has expired. Please log in again.',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            next({ name: 'login' });
+        });
+    } else {
+        next();
+    }
 });
 
 export default router;

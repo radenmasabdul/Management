@@ -26,8 +26,8 @@ const login = async () => {
       password: user.password,
     });
 
-    Cookies.set("token", res.data.data.token);
-    Cookies.set("user", JSON.stringify(res.data.data.user));
+    Cookies.set("token", res.data.data.token, { expires: 0.5 }); // Set token to expire in 12 hours
+    Cookies.set("user", JSON.stringify(res.data.data.user), { expires: 0.5 }); // Set user data to expire in 12 hours
 
     if (Cookies.get("token")) {
       Swal.fire({
