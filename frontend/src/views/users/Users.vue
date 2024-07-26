@@ -1,6 +1,6 @@
 <script setup>
 import Layout from "../../layouts/Layout.vue";
-import AddNewUsers from "../../components/users/AddNewUsers.vue";
+import AddNewUser from "../../components/users/AddNewUser.vue";
 import Table from "../../components/Table.vue";
 
 import Swal from "sweetalert2";
@@ -73,7 +73,7 @@ const inputClass =
     <div class="flex flex-wrap justify-between mx-5 my-2">
       <h1 class="font-JakartaSans text-2xl font-bold text-black my-2">Users</h1>
 
-      <AddNewUsers />
+      <AddNewUser />
     </div>
 
     <div class="flex flex-wrap mx-5 my-2">
