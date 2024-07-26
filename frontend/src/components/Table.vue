@@ -2,7 +2,7 @@
 
 <template>
   <div class="overflow-x-auto">
-    <table class="table table-zebra">
+    <table class="table table-zebra border border-black border-solid">
       <slot></slot>
     </table>
   </div>

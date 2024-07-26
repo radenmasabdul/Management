@@ -91,9 +91,9 @@ const inputClass =
 
     <div class="mx-5 my-2" v-if="dataListUsers.length > 0">
       <Table>
-        <thead class="text-center">
+        <thead class="text-center bg-blue-600">
           <tr>
-            <th v-for="data in tableHead" :key="data.id" class="font-JakartaSans font-bold text-sm text-black">
+            <th v-for="data in tableHead" :key="data.id" class="font-JakartaSans font-bold text-sm text-white">
               {{ data.title }}
             </th>
           </tr>
@@ -119,9 +119,9 @@ const inputClass =
 
     <div v-else>
       <Table>
-        <thead class="text-center">
+        <thead class="text-center bg-blue-600">
           <tr>
-            <th v-for="data in tableHead" :key="data.id" class="font-JakartaSans font-bold text-sm text-black">
+            <th v-for="data in tableHead" :key="data.id" class="font-JakartaSans font-bold text-sm text-white">
               {{ data.title }}
             </th>
           </tr>
