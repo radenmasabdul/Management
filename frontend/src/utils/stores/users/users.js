@@ -2,8 +2,6 @@ import { defineStore } from 'pinia';
 import Cookies from "js-cookie";
 import Api from "../../../utils/index.js";
 
-const token = Cookies.get("token");
-
 export const useUsersStore = defineStore('users', {
     state: () => ({
         dataUsers: [],
@@ -29,7 +27,9 @@ export const useUsersStore = defineStore('users', {
 
                 this.isLoading = true;
 
+                const token = Cookies.get("token");
                 Api.defaults.headers.common["Authorization"] = token;
+
                 const res = await Api.get('/api/admin/users/getallusers');
                 // console.log('Data received from API:', res.data.data);
                 this.dataUsers = res.data.data;
@@ -41,7 +41,9 @@ export const useUsersStore = defineStore('users', {
         },
         async deleteUser(id) {
             try {
+                const token = Cookies.get("token");
                 Api.defaults.headers.common["Authorization"] = token;
+
                 await Api.delete(`/api/admin/users/deleteusers/${id}`);
                 await this.dataListUsers(true); // Force data refresh setelah hapus
             } catch (error) {

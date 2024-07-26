@@ -12,8 +12,8 @@ const store = useUsersStore();
 const dataListUsers = computed(() => store.filtersDataUsers);
 const searchKeyword = ref(store.getSearchData);
 
-onBeforeMount(() => {
-  store.dataListUsers();
+onBeforeMount(async () => {
+  await store.dataListUsers();
 });
 
 const tableHead = [
