@@ -1,6 +1,11 @@
 <script setup>
 import { ref, reactive } from "vue";
 
+import Cookies from "js-cookie";
+import Swal from "sweetalert2";
+
+import Api from "../../utils";
+
 const users = reactive({
   name: "",
   email: "",
@@ -8,9 +13,50 @@ const users = reactive({
   confirmPassword: "",
 });
 
+const token = Cookies.get("token");
+
 const isModalOpen = ref(false);
 const isHidePassword = ref(true);
 const isHideConfirmPassword = ref(true);
+
+const saveAddNew = async () => {
+  if (users.password !== users.confirmPassword) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Password and Confirm Password doesn't match!",
+    });
+    return;
+  }
+
+  try {
+    Api.defaults.headers.common["Authorization"] = token;
+    let payload = {
+      name: users.name,
+      email: users.email,
+      password: users.password,
+    };
+
+    const res = await Api.post("/api/admin/users/createusers", payload);
+
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Your work has been saved",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+
+    closeModal();
+  } catch (error) {
+    console.error(error);
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: error.response.data.errors[0].msg,
+    });
+  }
+};
 
 const openModal = () => {
   isModalOpen.value = true;
@@ -18,6 +64,10 @@ const openModal = () => {
 
 const closeModal = () => {
   isModalOpen.value = false;
+  users.name = "";
+  users.email = "";
+  users.password = "";
+  users.confirmPassword = "";
 };
 
 const togglePasswordVisibility = (field) => {
@@ -45,10 +95,10 @@ const inputClass =
         <label @click="closeModal" for="my_modal_6" class="cursor-pointer absolute right-3 top-3">
           <font-awesome-icon :icon="['fas', 'circle-xmark']" style="color: #ff0000" class="w-6 h-6" />
         </label>
-        <p class="font-JakartaSans font-bold text-2xl text-black">New Users</p>
+        <p class="font-JakartaSans font-bold text-2xl text-black border-b-2 border-black border-solid">New Users</p>
       </div>
 
-      <form class="space-y-4" @submit.prevent="saveRegister">
+      <form class="space-y-4" @submit.prevent="saveAddNew">
         <div>
           <label for="name" class="text-black text-sm mb-2 block font-JakartaSans">Full Name</label>
           <div class="relative flex items-center">
