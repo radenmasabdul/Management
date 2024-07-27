@@ -14,6 +14,7 @@ const users = reactive({
   email: "",
   password: "",
   confirmPassword: "",
+  role: "",
 });
 
 const token = Cookies.get("token");
@@ -38,6 +39,7 @@ const saveAddNew = async () => {
       name: users.name,
       email: users.email,
       password: users.password,
+      role: users.role,
     };
 
     const res = await Api.post("/api/admin/users/createusers", payload);
@@ -72,6 +74,7 @@ const closeModal = () => {
   users.email = "";
   users.password = "";
   users.confirmPassword = "";
+  users.role = "";
 };
 
 const togglePasswordVisibility = (field) => {
@@ -202,6 +205,17 @@ const inputClass =
                   />
                 </span>
               </div>
+            </div>
+          </div>
+
+          <div>
+            <label for="roles" class="text-black text-sm mb-2 block font-JakartaSans">Role</label>
+            <div class="relative flex items-center">
+              <select :class="inputClass" v-model="users.role">
+                <option value="Administator">Administator</option>
+                <option value="User HQ">User HQ</option>
+                <option value="User Branch">User Branch</option>
+              </select>
             </div>
           </div>
 

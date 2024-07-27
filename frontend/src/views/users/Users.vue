@@ -24,7 +24,8 @@ const tableHead = [
   { id: 1, title: "No" },
   { id: 2, title: "Name" },
   { id: 3, title: "Email" },
-  { id: 4, title: "Actions" },
+  { id: 4, title: "Role" },
+  { id: 5, title: "Actions" },
 ];
 
 const handleKeyPress = (event) => {
@@ -118,6 +119,7 @@ const inputClass =
             <th>{{ index + 1 + (showingValue - 1) * pageMultiplier }}</th>
             <td>{{ data.name }}</td>
             <td>{{ data.email }}</td>
+            <td>{{ data.role }}</td>
             <td class="flex flex-wrap justify-center items-center gap-4">
               <EditUser :dataUser="data" />
               <button class="btn btn-error btn-sm" @click="deleteUsers(data.id)">

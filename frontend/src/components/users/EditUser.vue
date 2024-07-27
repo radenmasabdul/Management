@@ -23,6 +23,7 @@ const initialForm = reactive({
   email: props.dataUser?.email,
   password: "",
   confirmPassword: "",
+  role: props.dataUser?.role,
 });
 
 const form = reactive({ ...initialForm });
@@ -42,6 +43,7 @@ const saveEditUser = async () => {
       name: form.name,
       email: form.email,
       password: form.password,
+      role: form.role,
     };
 
     const res = await Api.post(`/api/admin/users/updateusers/${props.dataUser.id}`, payload);
@@ -79,6 +81,7 @@ const resetForm = () => {
   form.email = initialForm.email;
   form.password = "";
   form.confirmPassword = "";
+  form.role = initialForm.role;
 };
 
 watch(
@@ -223,6 +226,27 @@ const inputClass =
                   />
                 </span>
               </div>
+            </div>
+          </div>
+
+          <div>
+            <label for="role" class="text-black text-sm mb-2 block font-JakartaSans">Role</label>
+            <div class="relative flex items-center">
+              <!-- <input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="off"
+                required
+                placeholder="Enter Your Email"
+                :class="inputClass"
+                v-model="form.email"
+              /> -->
+              <select :class="inputClass" v-model="form.role">
+                <option value="Administator">Administator</option>
+                <option value="User HQ">User HQ</option>
+                <option value="User Branch">User Branch</option>
+              </select>
             </div>
           </div>
 
