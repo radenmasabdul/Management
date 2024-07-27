@@ -15,6 +15,7 @@ const getAllUsers = async (req, res) => {
                 id: true,
                 name: true,
                 email: true,
+                role: true,
             },
             orderBy: {
                 id: "desc",
@@ -54,6 +55,7 @@ const createUser = async (req, res) => {
                 name: req.body.name,
                 email: req.body.email,
                 password: hashedPassword,
+                role: req.body.role,
             }
         });
 
@@ -83,6 +85,7 @@ const getUsersById = async (req, res) => {
                 id: true,
                 name: true,
                 email: true,
+                role: true,
             }
         });
 
@@ -124,6 +127,7 @@ const updateUsers = async (req, res) => {
                 name: req.body.name,
                 email: req.body.email,
                 password: hashedPassword,
+                role: req.body.role,
             }
         });
 
