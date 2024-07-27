@@ -1,6 +1,7 @@
 <script setup>
 import Layout from "../../layouts/Layout.vue";
 import AddNewUser from "../../components/users/AddNewUser.vue";
+import EditUser from "../../components/users/EditUser.vue";
 import Table from "../../components/Table.vue";
 
 import Swal from "sweetalert2";
@@ -105,9 +106,7 @@ const inputClass =
             <td>{{ data.name }}</td>
             <td>{{ data.email }}</td>
             <td class="flex flex-wrap justify-center items-center gap-4">
-              <button class="btn btn-info btn-sm">
-                <span><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff" /></span>
-              </button>
+              <EditUser :dataUser="data" />
               <button class="btn btn-error btn-sm" @click="deleteUsers(data.id)">
                 <span><font-awesome-icon :icon="['fas', 'trash']" style="color: #ffffff" /></span>
               </button>
