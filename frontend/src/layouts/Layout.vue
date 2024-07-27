@@ -5,7 +5,7 @@ import Content from "../components/layout/Content.vue";
 </script>
 
 <template>
-  <main class="flex h-screen">
+  <main class="flex h-full">
     <Sidebar />
     <div class="flex flex-col flex-grow">
       <Navbar />
