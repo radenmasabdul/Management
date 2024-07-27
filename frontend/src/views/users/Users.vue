@@ -13,6 +13,9 @@ const store = useUsersStore();
 const dataListUsers = computed(() => store.filtersDataUsers);
 const searchKeyword = ref(store.getSearchData);
 
+let showingValue = ref(1);
+let pageMultiplier = ref(10);
+
 onBeforeMount(async () => {
   await store.dataListUsers();
 });
@@ -65,6 +68,16 @@ const deleteUsers = async (id) => {
   }
 };
 
+const onChangePage = (pageOfItem) => {
+  showingValue.value = pageOfItem;
+};
+
+const paginatedUsers = computed(() => {
+  const start = (showingValue.value - 1) * pageMultiplier.value;
+  const end = start + pageMultiplier.value;
+  return dataListUsers.value.slice(start, end);
+});
+
 const inputClass =
   "w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-blue-600 font-JakartaSans focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1";
 </script>
@@ -90,7 +103,7 @@ const inputClass =
       />
     </div>
 
-    <div class="mx-5 my-2" v-if="dataListUsers.length > 0">
+    <div class="mx-5 my-2" v-if="paginatedUsers.length > 0">
       <Table>
         <thead class="text-center bg-blue-600">
           <tr>
@@ -101,8 +114,8 @@ const inputClass =
         </thead>
 
         <tbody class="text-center">
-          <tr v-for="(data, index) in dataListUsers" :key="data.id">
-            <th>{{ index + 1 }}</th>
+          <tr v-for="(data, index) in paginatedUsers" :key="data.id">
+            <th>{{ index + 1 + (showingValue - 1) * pageMultiplier }}</th>
             <td>{{ data.name }}</td>
             <td>{{ data.email }}</td>
             <td class="flex flex-wrap justify-center items-center gap-4">
@@ -134,61 +147,21 @@ const inputClass =
       </Table>
     </div>
 
-    <div class="mx-5 my-2">
-      <nav aria-label="Page navigation example">
-        <ul class="inline-flex -space-x-px text-sm">
-          <li>
-            <a
-              href="#"
-              class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              >Previous</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              >1</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              >2</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              aria-current="page"
-              class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-              >3</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              >4</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              >5</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              >Next</a
-            >
-          </li>
-        </ul>
-      </nav>
+    <div class="mx-5 mt-2 mb-4">
+      <p class="font-JakartaSans text-xs font-normal text-[#888888] py-2">
+        Showing {{ (showingValue - 1) * pageMultiplier + 1 }} to
+        {{ Math.min(showingValue * pageMultiplier, dataListUsers.length) }}
+        of {{ dataListUsers.length }} entries
+      </p>
+      <vue-awesome-paginate
+        :total-items="dataListUsers.length"
+        :items-per-page="parseInt(pageMultiplier)"
+        :on-click="onChangePage"
+        v-model="showingValue"
+        :max-pages-shown="4"
+        :show-breakpoint-buttons="false"
+        :show-ending-buttons="true"
+      />
     </div>
   </Layout>
 </template>
