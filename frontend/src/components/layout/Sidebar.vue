@@ -64,7 +64,7 @@ const iconClass = "text-blue-500 flex-shrink-0 w-5 h-5";
         </li>
 
         <li>
-          <router-link to="/#">
+          <router-link to="#">
             <font-awesome-icon :icon="['fas', 'gear']" :class="iconClass" />
             <span :class="textClass">Settings</span>
           </router-link>
