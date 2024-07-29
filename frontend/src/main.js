@@ -9,6 +9,47 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { fas } from "@fortawesome/free-solid-svg-icons";
 
+import {
+    Chart as ChartJS,
+    BarController,
+    BarElement,
+    DoughnutController,
+    ArcElement,
+    LineController,
+    LineElement,
+    PointElement,
+    PieController,
+    PolarAreaController,
+    RadarController,
+    BubbleController,
+    ScatterController,
+    CategoryScale,
+    LinearScale,
+    Title,
+    Tooltip,
+    Legend
+} from 'chart.js'
+
+ChartJS.register(
+    BarController,
+    BarElement,
+    DoughnutController,
+    ArcElement,
+    LineController,
+    LineElement,
+    PointElement,
+    PieController,
+    PolarAreaController,
+    RadarController,
+    BubbleController,
+    ScatterController,
+    CategoryScale,
+    LinearScale,
+    Title,
+    Tooltip,
+    Legend
+)
+
 library.add(fas)
 
 const pinia = createPinia()
